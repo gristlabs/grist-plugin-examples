@@ -1,0 +1,10 @@
+name: count_to_10
+version: 0.0.1
+components:
+  safeBrowser: main.js
+contributions:
+  importSources:
+    - importSource:
+        component: safeBrowser
+        name: count_to_10
+      label: Count to 10
