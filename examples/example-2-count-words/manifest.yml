@@ -1,0 +1,11 @@
+name: count-line-stats
+version: 0.0.1
+description: Grist core features
+components:
+  safePython: sandbox/main.py
+contributions:
+  fileParsers:
+    - fileExtensions: ["txt"]
+      parseFile:
+        component: safePython
+        name: line_stats
