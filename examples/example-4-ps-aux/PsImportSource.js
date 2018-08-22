@@ -46,7 +46,7 @@ class PsImporter {
         table_name: 'ps aux',
         column_metadata: headers.map(header => ({
           id: header,
-          type: HEADERS_TYPE[header],
+          type: HEADERS_TYPE[header] || 'Text',
         })),
         table_data: headers.map((header, index) => parsedEntries.map(chunks => chunks[index]))
       }],
