@@ -1,0 +1,10 @@
+name: psaux
+version: 0.0.1
+components:
+  unsafeNode: main.js
+contributions:
+  importSources:
+    - importSource:
+        component: unsafeNode
+        name: psaux
+      label: import `ps aux`
