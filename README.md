@@ -15,4 +15,4 @@ cp -R grist-plugin-examples/examples/ ~/.grist/plugins
 |-------|--------|
 |example-1-count-to-10|`ImportSourceAPI`, `SafeBrowser`|
 |example-2-line-stats|`ParseFileAPI`, `SafePython`|
-|example-3-github|`IMportSourceAPI`, `safeBrowser`|
+|example-3-github|`ImportSourceAPI`, `SafeBrowser`|
