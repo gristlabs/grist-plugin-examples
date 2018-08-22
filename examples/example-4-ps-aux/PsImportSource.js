@@ -7,13 +7,14 @@ const HEADERS_TYPE = {
   PID: 'Int',
   '%CPU': 'Numeric',
   '%MEM': 'Numeric',
-  'VSZ': 'Int',
-  'RSS': 'Int',
-  'TT': 'Text',
-  'STAT': 'Text',
-  'STARTED': 'Text',
-  'TIME': 'Text',
-  'COMMAND': 'Text',
+  VSZ: 'Int',
+  RSS: 'Int',
+  TT: 'Text',  // MacOs
+  TTY: 'Text', // Linux
+  STAT: 'Text',
+  STARTED: 'Text',
+  TIME: 'Text',
+  COMMAND: 'Text',
 };
 
 class PsImporter {
@@ -46,7 +47,7 @@ class PsImporter {
         table_name: 'ps aux',
         column_metadata: headers.map(header => ({
           id: header,
-          type: HEADERS_TYPE[header],
+          type: HEADERS_TYPE[header] || 'Text',
         })),
         table_data: headers.map((header, index) => parsedEntries.map(chunks => chunks[index]))
       }],
