@@ -6,7 +6,7 @@ Minimal examples of grist plugins
 
 ```
 mkdir -p ~/.grist/plugins
-git clone https://github.com/cpind/grist-plugin-examples.git
+git clone https://github.com/gristlabs/grist-plugin-examples.git
 cp -R grist-plugin-examples/examples/ ~/.grist/plugins
 ```
 
@@ -17,3 +17,18 @@ cp -R grist-plugin-examples/examples/ ~/.grist/plugins
 |example-2-line-stats|`ParseFileAPI`, `SafePython`|
 |example-3-github|`ImportSourceAPI`, `SafeBrowser`|
 |example-4-ps-aux|`ImportSourceAPI`, `UnsafeNode`|
+
+### How to use
+
+Examples with `ImportSourceAPI` can be used from the "Import" menu
+in the top right of Grist when editing a document.
+
+![Import menu](https://user-images.githubusercontent.com/118367/44528270-19fc6f00-a6b7-11e8-9cea-0e171337d810.png)
+
+Examples with `ParseFileAPI` can be used from the "Import" button
+on the left when viewing a list of documents, or from the "Import from file"
+entry in the "Import" menu.  Just pick a file
+with the extension that the example expects (you might have
+to read the example to figure this out).
+
+![Import button](https://user-images.githubusercontent.com/118367/44528271-19fc6f00-a6b7-11e8-9caa-e8c913155523.png)
