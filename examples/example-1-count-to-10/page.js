@@ -34,4 +34,8 @@ window.onload = function() {
       description: "The numbers between 1 and 10"
     });
   });
+  document.getElementById('cancel').addEventListener('click', () => {
+    // resolving with with no-argument causes import to cancel.
+    resolve();
+  });
 };
