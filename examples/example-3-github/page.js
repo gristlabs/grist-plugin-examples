@@ -21,7 +21,8 @@ window.onload = function() {
           kind: "fileList",
           files: [{content: resp, name: "repos.json"}]
         },
-        description: "Github repositories"
+        description: `Github repositories of ${name}`
       }));
   });
+  document.getElementById('cancel').addEventListener('click', () => resolve());
 }

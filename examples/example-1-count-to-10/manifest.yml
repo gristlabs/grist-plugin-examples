@@ -8,3 +8,7 @@ contributions:
         component: safeBrowser
         name: count_to_10
       label: Count to 10
+    - importSource:
+        component: safeBrowser
+        name: inline_count_to_10
+      label: Inline count to 10
