@@ -17,8 +17,13 @@ cp -R grist-plugin-examples/examples/ ~/.grist/plugins
 |example-2-line-stats|`ParseFileAPI`, `SafePython`|
 |example-3-github|`ImportSourceAPI`, `SafeBrowser`|
 |example-4-ps-aux|`ImportSourceAPI`, `UnsafeNode`|
+|example-5-shopify|`ImportSourceAPI`, `UnsafeNode`, `SafeBrowser`|
 
 ### How to use
+
+Some examples may require an additional build step. Please consult each examples README.md for
+details. For example, Shopify (Example 5) requires an `npm install` step and a local configuration
+file with Shopify credentials.
 
 Examples with `ImportSourceAPI` can be used from the "Import" menu
 in the top right of Grist when editing a document.
