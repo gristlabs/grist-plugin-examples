@@ -1,6 +1,6 @@
 "use strict";
 
-/* global grist, window, document, $ */
+/* global grist, window, document */
 
 const numbers = [
   "name,numeric",
@@ -16,11 +16,15 @@ const numbers = [
   "ten,10"].join('\n');
 
 let resolve, reject;
-grist.rpc.registerFunc('getImportSource', () => new Promise((_resolve, _reject) => {
-  console.log("saving resolver", _resolve);
-  resolve = _resolve;
-  reject = _reject;
-}));
+const importer = {
+  getImportSource: () => new Promise((_resolve, _reject) => {
+    console.log("saving resolver", _resolve);
+    resolve = _resolve;
+    reject = _reject;
+  })
+};
+grist.rpc.registerImpl('count_to_10', importer);
+grist.rpc.registerImpl('inline_count_to_10', importer);
 
 grist.ready();
 

@@ -1,12 +1,14 @@
 "use strict";
 
-/* global grist, window, document, $ */
+/* global grist, window, document, fetch */
 
 let resolve, reject;
-grist.rpc.registerFunc('getImportSource', () => new Promise((_resolve, _reject) => {
-  resolve = _resolve;
-  reject = _reject;
-}));
+grist.rpc.registerImpl('github', {
+  getImportSource: () => new Promise((_resolve, _reject) => {
+    resolve = _resolve;
+    reject = _reject;
+  })
+});
 
 grist.ready();
 
@@ -25,4 +27,4 @@ window.onload = function() {
       }));
   });
   document.getElementById('cancel').addEventListener('click', () => resolve());
-}
+};
