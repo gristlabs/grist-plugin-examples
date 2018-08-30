@@ -1,0 +1,11 @@
+name: shopify
+version: 0.0.1
+components:
+  unsafeNode: server/index.js
+  safeBrowser: main.js
+contributions:
+  importSources:
+    - importSource:
+        component: safeBrowser
+        name: shopify
+      label: Import from Shopify
