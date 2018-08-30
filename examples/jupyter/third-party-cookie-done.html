@@ -1,0 +1,9 @@
+<body>
+<script>
+  // See https://stackoverflow.com/a/34991552/328565
+  if (window.parent) {
+    const yesNo = Boolean(/thirdparty=yes/.test(document.cookie));
+    window.parent.postMessage(`third-party-cookie=${yesNo}`, '*');
+  }
+</script>
+</body>
