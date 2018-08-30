@@ -15,31 +15,26 @@ const numbers = [
   "nine,9",
   "ten,10"].join('\n');
 
-let resolve, reject;
-const importer = {
-  getImportSource: () => new Promise((_resolve, _reject) => {
-    console.log("saving resolver", _resolve);
-    resolve = _resolve;
-    reject = _reject;
-  })
-};
-grist.rpc.registerImpl('count_to_10', importer);
-grist.rpc.registerImpl('inline_count_to_10', importer);
+const importer = grist.handleImporter('count_to_10');
+const inlineImporter = grist.handleImporter('inline_count_to_10');
 
 grist.ready();
 
 window.onload = function() {
   document.getElementById('import').addEventListener('click', () => {
-    resolve({
+    const importSource = {
       item: {
         kind: "fileList",
         files: [{content: numbers, name: "numbers.csv"}]
       },
       description: "The numbers between 1 and 10"
-    });
+    };
+    importer.getImportSource.resolve(importSource);
+    inlineImporter.getImportSource.resolve(importSource);
   });
   document.getElementById('cancel').addEventListener('click', () => {
     // resolving with with no-argument causes import to cancel.
-    resolve();
+    importer.getImportSource.resolve();
+    inlineImporter.getImportSource.resolve();
   });
 };
