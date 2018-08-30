@@ -24,6 +24,7 @@
         const result = await grist.rpc.callRemoteFunc("startOrReuse@main.js");
         console.log("RESULT", result);
         document.body.appendChild(dom('iframe.full', {src: result}));
+        setInterval(() => grist.rpc.postMessageForward("main.js", "ping"), 60000);
       } catch (e) {
         console.log("ERROR", e);
         document.body.appendChild(dom('div.full', e.message));
