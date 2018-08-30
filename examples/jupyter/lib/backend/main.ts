@@ -1,34 +1,34 @@
 "use strict";
 
-const grist = require('grist-plugin-api');
-const childProcess = require('child_process');
+import * as grist from 'grist-plugin-api';
+import {ChildProcess, spawn} from 'child_process';
 
-let notebookProcess = null;
-let notebookUrl = null;
+let notebookProcess: ChildProcess|null = null;
+let notebookUrl: Promise<string>|null = null;
 
-function startOrReuse() {
+function startOrReuse(): Promise<string> {
   return notebookUrl || (notebookUrl = start());
 }
 
-function start() {
-  notebookProcess = childProcess.spawn("jupyter", ["notebook", "--no-browser", "-y"], {
-    shell: false,   // TODO either true or false work
+function start(): Promise<string> {
+  const child = spawn("jupyter", ["notebook", "--no-browser", "-y"], {
     stdio: ['ignore', 'inherit', 'pipe'],
   });
+  notebookProcess = child;
 
   // Get the notebook URL from parsing the process's stderr.
-  return new Promise((resolve, reject) => {
-    const stderr = [];
-    notebookProcess.on('error', reject);
-    notebookProcess.on('exit', (code, signal) => {
+  return new Promise<string>((resolve, reject) => {
+    const stderr: string[] = [];
+    child.on('error', reject);
+    child.on('exit', (code, signal) => {
       if (signal || code) {
         reject(new Error(`jupyter notebook exited with ${signal || code}\n${stderr.join("")}`));
       }
     });
-    notebookProcess.stderr.on('data', (data) => {
+    child.stderr.on('data', (data) => {
       data = data.toString();
       stderr.push(data);
-      console.log("DATA", data.replace(/\s+$/, ''));
+      console.log("from jupyter:", data.replace(/\s+$/, ''));
       const match = /(http:\/\/localhost[\S]*)\/(\?\S+)/.exec(data);
       if (match) { resolve(`${match[1]}/notebooks/Untitled.ipynb${match[2]}`); }
     });

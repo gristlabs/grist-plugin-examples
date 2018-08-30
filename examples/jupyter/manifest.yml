@@ -1,11 +1,15 @@
 name: jupyter
 version: 0.0.1
 components:
-  unsafeNode: main.js
+  unsafeNode: dist/backend/main.js
   #safeBrowser: worker.js
   #deactivate:
   #  inactivitySec: 5
 contributions:
   customSections:
-    - path: index.html
+    - path: static/index.html
       name: Jupyter Notebook
+
+scripts:
+  build: tsc
+  #test: mocha ${XUNIT:+-R xunit}

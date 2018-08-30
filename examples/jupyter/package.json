@@ -1,0 +1,25 @@
+{
+  "name": "grist-plugin-jupiter",
+  "version": "0.0.1",
+  "description": "Grist plugin to show and execute a Jupyter Notebook",
+  "main": "main.js",
+  "scripts": {
+    "build": "rm -rf dist/ && tsc && webpack --mode development --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@types/node": "^6.0.113",
+    "grain-rpc": "^0.1.6",
+    "grainjs": "^0.1.0",
+    "grist-plugin-api": "file:///Users/dmitry/devel/grist2/public-api/grist-plugin-api"
+  },
+  "devDependencies": {
+    "fork-ts-checker-webpack-plugin": "^0.4.9",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
