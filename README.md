@@ -21,7 +21,7 @@ cp -R grist-plugin-examples/examples/ ~/.grist/plugins
 
 ### How to use
 
-Some examples may require an additional build step. Please consult each examples README.md for
+Some examples may require an additional build step. Please consult each example's README.md for
 details. For example, Shopify (Example 5) requires an `npm install` step and a local configuration
 file with Shopify credentials.
 
