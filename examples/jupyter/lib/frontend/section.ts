@@ -10,7 +10,7 @@ async function init() {
     console.log("RESULT", result);
     document.getElementById('loading')!.style.display = 'none';
     document.body.appendChild(dom('iframe.full', {src: result}));
-    setInterval(() => grist.rpc.postMessageForward("main.js", "ping"), 60000);
+    setInterval(() => grist.rpc.postMessageForward("dist/backend/main.js", "ping"), 60000);
   } catch (e) {
     console.log("ERROR", e);
     document.body.appendChild(dom('div.full', e.message));

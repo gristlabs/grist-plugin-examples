@@ -6,9 +6,20 @@ import {ChildProcess, spawn} from 'child_process';
 let notebookProcess: ChildProcess|null = null;
 let notebookUrl: Promise<string>|null = null;
 
-function startOrReuse(): Promise<string> {
+async function startOrReuse(): Promise<string> {
+  const stub = grist.rpc.getStub<grist.GristDocAPI>("GristDocAPI@grist", grist.checkers.GristDocAPI);
+  console.warn("getDocName", await stub.getDocName());
+  console.warn("getDocPath", await stub.getDocPath());
   return notebookUrl || (notebookUrl = start());
 }
+
+// TODO: This is needed in ~/.jupyter/jupyter_notebook_config.py
+// c.NotebookApp.tornado_settings = {
+//   'headers': {
+//     'Content-Security-Policy': "frame-ancestors 'self' http://localhost:8080 http://getgrist.localtest.me:8080 http://127.0.0.1:8080"
+//     // "UNTRUSTED-CONTENT-HOST:GRIST-PORT"
+//   }
+// }
 
 function start(): Promise<string> {
   const child = spawn("jupyter", ["notebook", "--no-browser", "-y"], {
