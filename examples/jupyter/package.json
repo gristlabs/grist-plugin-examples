@@ -14,11 +14,13 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@types/node": "^6.0.113",
+    "fs-extra": "^7.0.0",
     "grain-rpc": "^0.1.6",
     "grainjs": "^0.1.0",
     "grist-plugin-api": "file:///Users/dmitry/devel/grist2/public-api/grist-plugin-api"
   },
   "devDependencies": {
+    "@types/fs-extra": "^5.0.4",
     "concurrently": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^0.4.9",
     "tslint": "^5.11.0",
