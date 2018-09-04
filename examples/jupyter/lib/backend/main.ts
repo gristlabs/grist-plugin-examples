@@ -6,23 +6,20 @@ import {ChildProcess, spawn} from 'child_process';
 let notebookProcess: ChildProcess|null = null;
 let notebookUrl: Promise<string>|null = null;
 
-async function startOrReuse(): Promise<string> {
+async function startOrReuse(parentHost: string): Promise<string> {
   const stub = grist.rpc.getStub<grist.GristDocAPI>("GristDocAPI@grist", grist.checkers.GristDocAPI);
   console.warn("getDocName", await stub.getDocName());
   console.warn("getDocPath", await stub.getDocPath());
-  return notebookUrl || (notebookUrl = start());
+  return notebookUrl || (notebookUrl = start(parentHost));
 }
 
-// TODO: This is needed in ~/.jupyter/jupyter_notebook_config.py
-// c.NotebookApp.tornado_settings = {
-//   'headers': {
-//     'Content-Security-Policy': "frame-ancestors 'self' http://localhost:8080 http://getgrist.localtest.me:8080 http://127.0.0.1:8080"
-//     // "UNTRUSTED-CONTENT-HOST:GRIST-PORT"
-//   }
-// }
-
-function start(): Promise<string> {
-  const child = spawn("jupyter", ["notebook", "--no-browser", "-y"], {
+function start(parentHost: string): Promise<string> {
+  // Jupyter defaults prevent notebooks from being shown in frames of other hosts (the CSP sets
+  // frame-ancestors to 'self'). To show them in Grist, we need to allow localhost and the origin
+  // of the iframe containing the Jupyter iframe (untrusted-content-host, aka parentHost here).
+  const child = spawn("jupyter", ["notebook", "--no-browser", "-y",
+    `--NotebookApp.tornado_settings={'headers':{'Content-Security-Policy':"frame-ancestors 'self' http://localhost:* ${parentHost}"}}`,
+  ], {
     stdio: ['ignore', 'inherit', 'pipe'],
   });
   notebookProcess = child;

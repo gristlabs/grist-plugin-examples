@@ -6,7 +6,7 @@ async function init() {
     if (!await thirdPartyCookieCheck()) {
       throw new Error('Using Jupyter Notebook in Grist requires Third-Party Cookies to be enabled');
     }
-    const result = await grist.rpc.callRemoteFunc("startOrReuse@dist/backend/main.js");
+    const result = await grist.rpc.callRemoteFunc("startOrReuse@dist/backend/main.js", location.origin);
     console.log("RESULT", result);
     document.getElementById('loading')!.style.display = 'none';
     document.body.appendChild(dom('iframe.full', {src: result}));
