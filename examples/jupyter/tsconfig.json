@@ -9,7 +9,10 @@
     "allowJs": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "outDir": "dist"
+    "outDir": "dist",
+    "plugins": [{
+      "name": "tslint-language-service"
+    }]
   },
   "include": ["lib"]
 }
