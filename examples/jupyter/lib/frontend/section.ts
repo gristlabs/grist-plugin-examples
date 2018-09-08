@@ -1,20 +1,16 @@
-import * as grist from 'grist-plugin-api';
+// tslint:disable:no-console
 import {dom} from 'grainjs';
+import * as grist from 'grist-plugin-api';
 
 async function init() {
-  try {
-    if (!await thirdPartyCookieCheck()) {
-      throw new Error('Using Jupyter Notebook in Grist requires Third-Party Cookies to be enabled');
-    }
-    const result = await grist.rpc.callRemoteFunc("startOrReuse@dist/backend/main.js", location.origin);
-    console.log("RESULT", result);
-    document.getElementById('loading')!.style.display = 'none';
-    document.body.appendChild(dom('iframe.full', {src: result}));
-    setInterval(() => grist.rpc.postMessageForward("dist/backend/main.js", "ping"), 60000);
-  } catch (e) {
-    console.log("ERROR", e);
-    document.body.appendChild(dom('div.full', e.message));
+  if (!await thirdPartyCookieCheck()) {
+    throw new Error('Using Jupyter Notebook in Grist requires Third-Party Cookies to be enabled');
   }
+  const result = await grist.rpc.callRemoteFunc("startOrReuse@dist/backend/main.js", location.origin);
+  console.log("RESULT", result);
+  document.getElementById('loading')!.style.display = 'none';
+  document.body.appendChild(dom('iframe.full', {src: result}));
+  setInterval(() => grist.rpc.postMessageForward("dist/backend/main.js", "ping"), 60000);
 }
 
 function thirdPartyCookieCheck() {
@@ -33,4 +29,7 @@ function thirdPartyCookieCheck() {
 }
 
 grist.ready();
-init();
+init().catch((e) => {
+  console.log("ERROR", e);
+  document.body.appendChild(dom('div.full', e.message));
+});
