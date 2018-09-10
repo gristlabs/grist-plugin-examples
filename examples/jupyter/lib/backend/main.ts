@@ -5,7 +5,6 @@ import {ChildProcess, spawn} from 'child_process';
 import * as express from 'express';
 import * as fse from 'fs-extra';
 import * as grist from 'grist-plugin-api';
-import * as http from 'http';
 import * as path from 'path';
 
 let notebookProcess: ChildProcess|null = null;
@@ -23,7 +22,10 @@ function expressWrap(callback: (req: express.Request, res: express.Response) => 
   };
 }
 
-async function startAPIServer(): Promise<http.Server> {
+/**
+ * Starts an API server, and returns its URL.
+ */
+async function startAPIServer(): Promise<string> {
   const app = express();
 
   app.route('/tables')
@@ -31,7 +33,7 @@ async function startAPIServer(): Promise<http.Server> {
   // .post(expressWrap((req) => gristDocAPI.createTable(req.body)));
 
   app.route('/tables/:tableId')
-  .get(expressWrap((req) => gristDocAPI.fetchTable(req.params.tableId)));
+  .get(expressWrap(async (req) => gristDocAPI.fetchTable(req.params.tableId)));
   // .put(expressWrap((req) => gristDocAPI.replaceTableData(req.params.tableId, req.body)))
   // .delete(expressWrap((req) => gristDocAPI.removeTable(req.params.tableId)));
 
@@ -39,7 +41,7 @@ async function startAPIServer(): Promise<http.Server> {
   await new Promise((resolve) => server.once('listening', resolve));
   const serverUrl = `http://localhost:${server.address().port}`;
   console.log("REST interface started at %s", serverUrl);
-  return server;
+  return serverUrl;
 }
 
 async function startOrReuse(parentHost: string): Promise<string> {
@@ -53,6 +55,8 @@ async function start(parentHost: string): Promise<string> {
   }
   const parsedPath = path.parse(docPath);
   const notebookPath = path.format({dir: parsedPath.dir, name: parsedPath.name, ext: '.ipynb'});
+  const pythonRoot = path.resolve(__dirname, "..", "..", "python");
+  const PYTHONPATH = (process.env.PYTHONPATH || '') + ':' + pythonRoot;
 
   if (await fse.pathExists(notebookPath)) {
     console.log("Using existing notebook at %s", notebookPath);
@@ -61,7 +65,7 @@ async function start(parentHost: string): Promise<string> {
     await fse.copy(defaultNotebookPath, notebookPath);
   }
 
-  await startAPIServer();
+  const serverUrl = await startAPIServer();
 
   // Jupyter defaults prevent notebooks from being shown in frames of other hosts (the CSP sets
   // frame-ancestors to 'self'). To show them in Grist, we need to allow localhost and the origin
@@ -73,6 +77,7 @@ async function start(parentHost: string): Promise<string> {
   ], {
     cwd: parsedPath.dir,
     stdio: ['ignore', 'inherit', 'pipe'],
+    env: {...process.env, GRIST_API_SERVER_URL: serverUrl, PYTHONPATH},
   });
   notebookProcess = child;
 
