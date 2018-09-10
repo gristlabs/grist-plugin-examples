@@ -5,13 +5,20 @@
   <title>Jupyter Notebook</title>
   <script src="/grist-plugin-api.js"></script>
   <style>
-    html, body, .full { width: 100%; height: 100%; margin: 0; }
+    html, body, .full { width: 100%; height: 100%; margin: 0; font: medium arial; }
     .full { border: none; }
-    #loading { position: absolute; }
+    .message { padding: 0 2rem; }
   </style>
 </head>
 <body>
-  <div id="loading">Loading...</div>
+  <h1 id="title" class="message">Jupyter Plugin</h1>
+  <div id="loading" class="message">Loading...</div>
+  <div id="instructions" class="message" style="display: none">
+    <p>
+    You need to install Jupyter first and ensure it is available in your $PATH.
+    <p>
+    See instructions at ...
+  </div>
   <script src="../dist/frontend.bundle.js"></script>
 </body>
 </html>

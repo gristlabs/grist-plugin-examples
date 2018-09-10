@@ -9,6 +9,7 @@ async function init() {
   const result = await grist.rpc.callRemoteFunc("startOrReuse@dist/backend/main.js", location.origin);
   console.log("RESULT", result);
   document.getElementById('loading')!.style.display = 'none';
+  document.getElementById('title')!.style.display = 'none';
   document.body.appendChild(dom('iframe.full', {src: result}));
   setInterval(() => grist.rpc.postMessageForward("dist/backend/main.js", "ping"), 60000);
 }
@@ -31,5 +32,10 @@ function thirdPartyCookieCheck() {
 grist.ready();
 init().catch((e) => {
   console.log("ERROR", e);
-  document.body.appendChild(dom('div.full', e.message));
+  document.getElementById('loading')!.style.display = 'none';
+  if (/spawn.*ENOENT/.test(e.message)) {
+    document.getElementById('instructions')!.style.display = 'block';
+  } else {
+    document.body.appendChild(dom('div.message', e.message));
+  }
 });
