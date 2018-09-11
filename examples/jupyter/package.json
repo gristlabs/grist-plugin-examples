@@ -12,6 +12,13 @@
   },
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "manifest.yml",
+    "default.ipynb",
+    "dist/**/*.js",
+    "python/**/*.py",
+    "static/"
+  ],
   "dependencies": {
     "@types/node": "^6.0.113",
     "express": "^4.16.3",
