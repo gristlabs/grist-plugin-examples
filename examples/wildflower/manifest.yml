@@ -1,0 +1,10 @@
+name: wildflower
+version: 0.0.1
+components:
+  unsafeNode: server/index.js
+contributions:
+  importSources:
+    - importSource:
+        component: unsafeNode
+        name: shopify
+      label: Wildflower import
