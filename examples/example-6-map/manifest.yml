@@ -1,0 +1,8 @@
+name: map_section
+version: 0.0.1
+components:
+  safeBrowser: main.js
+contributions:
+  customSections:
+    - path: index.html
+      name: Map section

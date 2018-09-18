@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="screen.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="/grist-plugin-api.js"></script>
+    <script src="./page.js"></script>
+  </head>
+  <body>
+    <div id="map">
+      This takes the first table it finds in your document, and expects it to have columns
+      &ldquo;long&rdquo; for longitude, &ldquo;lat&rdquo; for latitude, and
+      &ldquo;Name&rdquo; for a title (the spreadsheet source listed for 
+      <a href="http://jlord.us/hack-spots/">http://jlord.us/hack-spots/</a>
+      is a good example).
+    </div>
+  </body>
+</html>

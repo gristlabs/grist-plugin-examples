@@ -1,0 +1,9 @@
+#map {
+  width: 100vw; 
+  height: 100vh;
+}
+
+html, body, #map {
+  margin: 0;
+  padding: 0;
+}
