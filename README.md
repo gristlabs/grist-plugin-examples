@@ -41,3 +41,6 @@ to read the example to figure this out).
 
 Examples with `customSections` can be used by creating a custom section,
 and then in its view options selecting the given plugin and section.
+
+![Add custom section](https://user-images.githubusercontent.com/118367/45760330-c880ca80-bbf7-11e8-8121-428f953b00d9.png)
+![Custom section plugin](https://user-images.githubusercontent.com/118367/45759918-fb768e80-bbf6-11e8-9bd9-d183ee2d54c6.png)
